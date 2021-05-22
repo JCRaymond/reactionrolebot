@@ -122,12 +122,11 @@ async def addrole(ctx, role_name, emoji):
    persist_roles()
    if role_message is None:
       await refresh(ctx)
-      if role_message is not None:
-         await role_message.add_reaction(emoji)
-      else:
-         await ctx.channel.send(f'Create a role message in {1}, and then run `!refresh`.') 
-   else:
+   if role_message is not None:
+      await role_message.add_reaction(emoji)
       await ctx.channel.send('Successfully created reaction role!')
+   else:
+      await ctx.channel.send(f'Create a role message in {role_channel}, and then run `!refresh`.') 
 
 @bot.command()
 async def removerole(ctx, emoji):
