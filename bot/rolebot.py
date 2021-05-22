@@ -170,6 +170,7 @@ async def removerole(ctx, emoji):
 
 @bot.command()
 async def refresh(ctx):
+   global role_message
    if ctx.guild != guild:
       return
    mem = ctx.author
