@@ -111,6 +111,9 @@ async def addrole(ctx, role_name, emoji):
       emoji = d.PartialEmoji(animated=False, name=emoji)
    elif isinstance(emoji, d.Emoji):
       emoji = d.PartialEmoji(animated=emoji.animated,id=emoji.id,name=emoji.name)
+   if emoji in react_roles:
+      await ctx.channel.send(f'There is already a reaction role for the emoji "{emoji}"!')
+      return
    
    roles = await guild.fetch_roles()
    react_role = d.utils.get(roles, name=role_name)
@@ -167,6 +170,13 @@ async def removerole(ctx, emoji):
 
 @bot.command()
 async def refresh(ctx):
+   if ctx.guild != guild:
+      return
+   mem = ctx.author
+   admin_role = d.utils.get(mem.roles, name=config.admin_role)
+   if admin_role is None:
+      return
+
    role_message = None
    async for message in role_channel.history(limit = 1, oldest_first=True):
       role_message = message
