@@ -1,0 +1,9 @@
+*.swp
+*.swo
+.venv
+config.json
+.tex
+*.tex
+*.png
+*.tmp
+*.data
